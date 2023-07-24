@@ -7,38 +7,21 @@ import java.util.List;
 // BEGIN
 public class App {
 
-    public static boolean scrabble(String letters, String word) {
+    public static boolean scrabble(String symbols, String word) {
 
-        ArrayList<Character> arrayOfLetters = getCharsList(letters);
-        ArrayList<Character> arrayOfword = getCharsList(word);
+        String[] letters = symbols.split("");
 
-        boolean result = false;
+        List<String> array = new Arrays.asList(letters);
 
-        for (Character symbol: arrayOfword) {
-            if (arrayOfLetters.contains(symbol)) {
-                result = true;
-                arrayOfLetters.remove(arrayOfLetters.indexOf(symbol));
-            } else {
-                result = false;
-                break;
+        for (var i = 0; i < word.length; i++) {
+            String current = word.substring(i, i + 1).toLowerCase();
+
+            if (!array.contains(current)) {
+                return false;
             }
+            array.remove(current);
         }
-        return result;
-    }
-
-    public static ArrayList<Character> getCharsList(String str) {
-
-        String strOfLowerCase = str.toLowerCase();
-
-        char[] array = strOfLowerCase.toCharArray();
-
-        ArrayList<Character> arrayList = new ArrayList<>();
-
-        for (Character symbol: array) {
-            arrayList.add(symbol);
-        }
-
-        return arrayList;
+        return true;
     }
 }
 //END
