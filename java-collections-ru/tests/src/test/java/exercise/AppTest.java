@@ -11,12 +11,15 @@ class AppTest {
     @Test
     void testTake() {
         // BEGIN
-        List<Integer> integerList = new ArrayList<>(1, 2, 3, 4);
-        int count = 2;
+        List<Integer> integerList = new ArrayList<>();
+        integerList.add(1);
+        integerList.add(2);
+        integerList.add(3);
+        integerList.add(4);
 
-        int result = App.take(integerList, count);
+        int count = 3;
 
-        assertThat(result).hasSize(count);
+        assertThat(App.take(integerList, count)).hasSize(count);
         // END
     }
 }
