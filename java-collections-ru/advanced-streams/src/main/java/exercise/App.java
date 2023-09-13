@@ -7,17 +7,17 @@ import java.util.Arrays;
 class App {
     public static String getForwardedVariables(String config) {
 
-        return (String) Arrays.stream(config.split("\n"))
-                .peek(s -> System.out.println(s))
-                .filter(s -> s.startsWith("environment"))
-                .map(s -> s.replaceAll("environment=", ""))
-                .map(s -> s.replaceAll("\"", ""))
-                .map(s -> s.replaceAll(",", " "))
-                .map(s -> s.split(" "))
+        String[] lines = config.split("\n");
+
+        return Arrays.stream(lines)
+                .filter(line -> line.startsWith("environment"))
+                .map(line -> line.replaceAll("environment=", ""))
+                .map(line -> line.replaceAll("\"", ""))
+                .map(line -> line.split(","))
                 .flatMap(Arrays::stream)
-                .filter(s -> s.startsWith("X_FORWARDED_"))
-                .map(s -> s.replaceAll("X_FORWARDED_", ""))
-                .map(s -> s.trim())
+                .filter(line -> line.startsWith("X_FORWARDED_"))
+                .map(line -> line.replaceFirst("X_FORWARDED_", ""))
+                .map(line -> line.trim())
                 .collect(Collectors.joining(","));
     }
 }
